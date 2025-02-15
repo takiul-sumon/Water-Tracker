@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:water_tracker/model_button.dart';
 
 class Home_Page extends StatefulWidget {
   const Home_Page({super.key});
@@ -8,6 +9,24 @@ class Home_Page extends StatefulWidget {
 }
 
 class _Home_PageState extends State<Home_Page> {
+  int consumption = 0;
+  int _goal = 2000;
+  double percent = 0.0;
+
+  drinkingAmount(int amount) {
+    setState(() {
+      consumption = (consumption + amount).clamp(0, 2000);
+      print(consumption);
+       percent = consumption / _goal;
+    });
+  }
+
+  Reset() {
+    setState(() {
+      consumption = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +42,7 @@ class _Home_PageState extends State<Home_Page> {
       body: Center(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
@@ -36,23 +55,83 @@ class _Home_PageState extends State<Home_Page> {
                         blurRadius: 20,
                         spreadRadius: 10)
                   ]),
-              child:const Padding(
+              child: Padding(
                 padding: EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('Today\'s Intake',style:
-                          TextStyle( fontWeight: FontWeight.w700),),
+                    const Text(
+                      'Today\'s Intake',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
                     SizedBox(
                       height: 10,
                     ),
                     Text(
-                      '1000',
+                      '${consumption}',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  height: 100,
+                  width: 100,
+                  child:  CircularProgressIndicator(
+                    value: percent,
+                    color: Colors.blue,
+                    strokeWidth: 4,
+                    backgroundColor: Colors.black45,
+                  ),
+                ),
+                 Text(
+                  '${percent*100}%',
+                  style:const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ModelButton(
+              text: '200 ',
+              onClick: () => drinkingAmount(200),
+              color: Colors.blue,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ModelButton(
+              text: '500',
+              onClick: () => drinkingAmount(500),
+              color: Colors.blue,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ModelButton(
+              text: '700',
+              onClick: () => drinkingAmount(700),
+              color: Colors.blue,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 30,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => Reset(),
+                child: Text('Reset'),
+                style: ElevatedButton.styleFrom(),
               ),
             )
           ],
