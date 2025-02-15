@@ -20,11 +20,41 @@ class _Home_PageState extends State<Home_Page> {
         centerTitle: true,
       ),
       backgroundColor: const Color(0xffe3f2fd),
-      body: Container(
-        color: Colors.amber,
-        child: const Row(
+      body: Center(
+        child: Column(
           children: [
-            
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.blue.withOpacity(.2),
+                        blurRadius: 20,
+                        spreadRadius: 10)
+                  ]),
+              child:const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Today\'s Intake',style:
+                          TextStyle( fontWeight: FontWeight.w700),),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '1000',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
